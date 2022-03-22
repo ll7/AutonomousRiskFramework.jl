@@ -2,3 +2,7 @@ name = "ScenarioSelection"
 uuid = "3cd2cbe0-3bbe-474e-bd11-d54ca1f0eb8c"
 authors = ["Shubh Gupta <shubhg1996@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+CrossEntropyMethod = "f7e364ee-db6c-46d3-b598-27dc284d9c4d"
+POMDPSimulators = "e0d0a172-29c6-5d4e-96d0-f262df5d01fd"
