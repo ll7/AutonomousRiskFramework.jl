@@ -1,5 +1,9 @@
 # .devcontainer README
 
+## reopen
+
+`F1`: Reopen and rebuild in container.
+
 better approach:
 
 ```shell

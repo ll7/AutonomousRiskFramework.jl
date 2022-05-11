@@ -3,7 +3,18 @@
 // See https://github.com/julia-vscode/julia-devcontainer/blob/master/Dockerfile for image contents
 {
 	"name": "Julia (Community)",
-	"image": "ghcr.io/julia-vscode/julia-devcontainer",
+	// "image": "ghcr.io/julia-vscode/julia-devcontainer",
+	"dockerFile": "docker/Dockerfile",
+	"runArgs": [ "--gpus", "all"], // required for cuda
+	// "runArgs": [
+	// 	"--gpus all"
+	// 	// "--privileged",
+	// 	// "--net=host",
+	// 	// "-e DISPLAY=$DISPLAY"
+	// ],
+	// "dockerComposeFile": "docker/docker-compose.yml",
+	// "service": "julia",
+	// "workspaceFolder": "/workspaces",
 	"extensions": [
 		"julialang.language-julia", 
 		"Gruntfuggly.todo-tree",
