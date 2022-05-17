@@ -20,33 +20,53 @@
         # "Scenario10" => "NoSignalJunctionCrossingRoute",
     )
 
-    function eval_carla_task_core(seed, α, scenario_type, weather)
-
-        sensors = [
-            Dict(
-                "id" => "GPS",
-                "lat" => Dict("mean" => 0, "std" => 0.0001, "upper" => 0.000000001, "lower" => -0.000000001),
-                "lon" => Dict("mean" => 0, "std" => 0.0001, "upper" => 0.000000001, "lower" => -0.000000001),
-                "alt" => Dict("mean" => 0, "std" => 0.00000001, "upper" => 0.0000001, "lower" => 0),
-            ),
-        ]
+    function eval_carla_task_core(seed, α, scenario_type, weather;
+                                  monte_carlo_run=false, use_neat=true, apply_gnss_noise=false,
+                                  sensor_config_gnss=nothing, sensor_config_camera=nothing)
+        sensors = []
 
         @info "$scenario_type: $(SCENARIO_CLASS_MAPPING[scenario_type])"
         @info "Seed: $seed"
         display(weather)
 
-        gym_args = (sensors=sensors, seed=seed, scenario_type=scenario_type, weather=weather, no_rendering=false)
+        if apply_gnss_noise
+            push!(sensors, sensor_config_gnss)
+        end
+
+        if use_neat
+            push!(sensors, sensor_config_camera)
+            agent = joinpath(@__DIR__, "../../CARLAIntegration/neat/leaderboard/team_code/neat_agent.py")
+        else
+            agent = nothing
+        end
+        gym_args = (sensors=sensors, seed=seed, scenario_type=scenario_type, weather=weather, no_rendering=false, agent=agent)
         carla_mdp = GymPOMDP(Symbol("adv-carla"); gym_args...)
 
         # TODO: Replace with A. Corso TD3 (costs and weights)
         # prior_weights = POLICY_WEIGHTS[s] # IF EXISTS
 
-        costs = run_td3_solver(carla_mdp, sensors) # NOTE: Pass in `prior_weights`
-        @show costs
-        risk_metrics = RiskMetrics(costs, α)
-        cvar = risk_metrics.cvar
+        if monte_carlo_run
+            env = carla_mdp.env
+            action_dim = sum([length(filter(!=("id"), keys(sensor))) for sensor in sensors])
+            # local info
+            dataset = missing
+            info = Dict("cost"=>0)
+            action = zeros(action_dim) # TODO: Skip all the adversarial sensors to begin with (instead of just zeroing out actions)
+            while !env.done
+                reward, obs, info = POMDPGym.step!(env, action)
+            end
+            close(env)
+            cost = info["cost"]
+            return cost, dataset
+        else
+            costs, dataset = run_td3_solver(carla_mdp, sensors) # NOTE: Pass in `prior_weights`
+            @show costs
+            @show dataset
+            risk_metrics = RiskMetrics(costs, α)
+            cvar = risk_metrics.cvar
 
-        return cvar
+            return cvar, dataset
+        end
     end
 
 end # @everywhere
