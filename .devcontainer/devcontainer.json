@@ -21,6 +21,7 @@
 		"GitHub.copilot",
 		"GitHub.vscode-pull-request-github",
 		"ms-toolsai.jupyter",
+		"mhutchie.git-graph",
 	],
 	// "onCreateCommand": "julia /workspaces/AutonomousRiskFramework.jl/install.jl", // must be executed after all files are integrated.
 	"postCreateCommand": "/julia-devcontainer-scripts/postcreate.jl",
