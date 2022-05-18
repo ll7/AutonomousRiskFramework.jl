@@ -24,6 +24,6 @@
 		"mhutchie.git-graph",
 	],
 	// "onCreateCommand": "julia /workspaces/AutonomousRiskFramework.jl/install.jl", // must be executed after all files are integrated.
-	"postCreateCommand": "/julia-devcontainer-scripts/postcreate.jl",
+	// "postCreateCommand": "/julia-devcontainer-scripts/postcreate.jl", // https://github.com/julia-vscode/julia-devcontainer/blob/master/postcreate.jl
 	"remoteUser": "vscode"
 }
