@@ -44,10 +44,12 @@ if ci
     pkg"add Conda"
     using Conda
     Conda.add("python=3.7.5")
+    Conda.add("pytorch")
 end
 
 Pkg.add("MCTS")
 Pkg.add("D3Trees")
+Pkg.add("BSON")
 Pkg.add("Distributions")
 Pkg.add("Infiltrator")
 Pkg.add("POMDPModelTools")
@@ -56,3 +58,5 @@ Pkg.add("POMDPs")
 Pkg.add("Parameters")
 Pkg.add("PyCall")
 Pkg.add("Flux")
+Pkg.add("POMDPSimulators")
+Pkg.add("OrderedCollections")

@@ -87,6 +87,18 @@ Install Instructions
     export PYTHONPATH=$PYTHONPATH:$CARLA_ROOT/PythonAPI
     ```
 
+1. Install fork of the NEAT agent:
+    - (Clone it into the `CARLAIntegration` directory):
+        - `git clone https://github.com/sisl/neat`
+        - Download NEAT pretrained models (from their [README](https://github.com/sisl/neat#training)):
+        ```
+        mkdir model_ckpt
+        wget https://s3.eu-central-1.amazonaws.com/avg-projects/neat/models.zip -P model_ckpt
+        unzip model_ckpt/models.zip -d model_ckpt/
+        rm model_ckpt/models.zip
+        ```
+        - (DEBUG): If you get an error `Torch not compiled with CUDA enabled` then run the following:
+            - `pip install torch===1.5.0 torchvision===0.6.0 -f https://download.pytorch.org/whl/torch_stable.html`
 
 
 Running Instructions

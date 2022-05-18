@@ -1,0 +1,29 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.234.0/containers/julia
+// See https://github.com/julia-vscode/julia-devcontainer/blob/master/Dockerfile for image contents
+{
+	"name": "Julia (Community)",
+	// "image": "ghcr.io/julia-vscode/julia-devcontainer",
+	"dockerFile": "docker/Dockerfile",
+	"runArgs": [ "--gpus", "all"], // required for cuda
+	// "runArgs": [
+	// 	"--gpus all"
+	// 	// "--privileged",
+	// 	// "--net=host",
+	// 	// "-e DISPLAY=$DISPLAY"
+	// ],
+	// "dockerComposeFile": "docker/docker-compose.yml",
+	// "service": "julia",
+	// "workspaceFolder": "/workspaces",
+	"extensions": [
+		"julialang.language-julia", 
+		"Gruntfuggly.todo-tree",
+		"GitHub.copilot",
+		"GitHub.vscode-pull-request-github",
+		"ms-toolsai.jupyter",
+		"mhutchie.git-graph",
+	],
+	// "onCreateCommand": "julia /workspaces/AutonomousRiskFramework.jl/install.jl", // must be executed after all files are integrated.
+	// "postCreateCommand": "/julia-devcontainer-scripts/postcreate.jl", // https://github.com/julia-vscode/julia-devcontainer/blob/master/postcreate.jl
+	"remoteUser": "vscode"
+}
